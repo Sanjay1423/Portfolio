@@ -1,0 +1,35 @@
+---
+// One polished diagram: an analytics feature moving out of a larger application into its own service.
+// Single-color line art; the moving block is the only accent.
+---
+<figure class="arch">
+  <svg viewBox="0 0 640 230" role="img" aria-labelledby="arch-title arch-desc">
+    <title id="arch-title">Analytics extraction</title>
+    <desc id="arch-desc">Before: the analytics feature is one part of a larger application. After: the application keeps its other parts, and analytics runs as its own service beside it.</desc>
+
+    <!-- Before -->
+    <text class="arch-label" x="20" y="22">Before</text>
+    <rect class="arch-box" x="20" y="36" width="240" height="170" />
+    <text class="arch-name" x="36" y="62">Application</text>
+    <rect class="arch-part" x="36" y="80" width="98" height="48" />
+    <rect class="arch-part" x="146" y="80" width="98" height="48" />
+    <rect class="arch-part" x="36" y="140" width="98" height="48" />
+    <rect class="arch-move arch-dashed" x="146" y="140" width="98" height="48" />
+    <text class="arch-small arch-accent" x="195" y="169" text-anchor="middle">Analytics</text>
+
+    <!-- Arrow -->
+    <path class="arch-arrow" d="M282 121 H346 M336 113 L346 121 L336 129" />
+
+    <!-- After -->
+    <text class="arch-label" x="368" y="22">After</text>
+    <rect class="arch-box" x="368" y="36" width="130" height="170" />
+    <text class="arch-name" x="384" y="62">Application</text>
+    <rect class="arch-part" x="384" y="80" width="98" height="48" />
+    <rect class="arch-part" x="384" y="140" width="98" height="48" />
+    <path class="arch-link" d="M498 121 H530" />
+    <rect class="arch-move" x="530" y="72" width="94" height="98" />
+    <text class="arch-small arch-accent" x="577" y="116" text-anchor="middle">Analytics</text>
+    <text class="arch-small arch-accent" x="577" y="134" text-anchor="middle">service</text>
+  </svg>
+  <figcaption class="mono">Moving analytics into its own service, simplified.</figcaption>
+</figure>

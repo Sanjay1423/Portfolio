@@ -1,0 +1,68 @@
+/* Design tokens. One set of values via light-dark(); see docs/REDESIGN_SPEC.md Section 4. */
+:root {
+  color-scheme: light dark;
+
+  /* surface and ink */
+  --paper:   light-dark(#f3f0e8, #0f0e0d);
+  --paper-2: light-dark(#ebe7dc, #181716);
+  --ink:     light-dark(#121110, #f1ede4);
+  --ink-2:   light-dark(#4a4741, #b3ada0);
+  --rule:    light-dark(#d6d1c3, #2b2926);
+  --rule-strong: light-dark(#8c8578, #6a645a);
+
+  /* accent: --accent for large text, rules and graphics; --accent-text for small text */
+  --accent:      light-dark(#e8460f, #ff7a45);
+  --accent-text: light-dark(#b93a0b, #ff8d5e);
+
+  /* layer slabs (backgrounds) and the text on them */
+  --layer-hardware: light-dark(#2b3a42, #22323b);
+  --layer-backend:  light-dark(#1c1b1a, #2e2b28);
+  --layer-desktop:  light-dark(#3a3631, #272320);
+  --layer-mobile:   light-dark(#4a4741, #201e1c);
+  --on-layer:       #f1ede4;
+
+  /* layer markers: >= 3:1 against --paper in both themes */
+  --mark-hardware: light-dark(#2b3a42, #7f9eae);
+  --mark-backend:  light-dark(#e8460f, #ff7a45);
+  --mark-desktop:  light-dark(#6b6358, #a89f90);
+  --mark-mobile:   light-dark(#8a8478, #d6cfc0);
+
+  /* type */
+  --font-display: 'Instrument Serif', 'Instrument Serif Fallback', Georgia, serif;
+  --font-body: 'Geist', 'Geist Fallback', system-ui, sans-serif;
+  --font-mono: 'Geist Mono', 'Geist Mono Fallback', ui-monospace, monospace;
+
+  --step--1: clamp(0.875rem, 0.85rem + 0.1vw, 0.9375rem);
+  --step-0: clamp(1rem, 0.96rem + 0.2vw, 1.125rem);
+  --step-1: clamp(1.2rem, 1.1rem + 0.5vw, 1.45rem);
+  --step-2: clamp(1.5rem, 1.3rem + 1vw, 2.1rem);
+  --step-3: clamp(1.9rem, 1.55rem + 1.8vw, 3rem);
+  --step-4: clamp(2.4rem, 1.8rem + 3vw, 4.5rem);
+  --step-6: clamp(3.5rem, 2rem + 8vw, 9rem);
+
+  /* space and layout */
+  --space-1: 0.25rem; --space-2: 0.5rem; --space-3: 1rem; --space-4: 1.5rem;
+  --space-5: 3rem; --space-6: 6rem; --space-7: 10rem;
+  --gutter: clamp(1rem, 4vw, 3rem);
+  --max: 1280px;
+  --measure: 62ch;
+  --topbar: 56px;
+
+  /* motion */
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --t-fast: 160ms; --t-base: 280ms; --t-slow: 520ms;
+}
+:root[data-theme='light'] { color-scheme: light; }
+:root[data-theme='dark']  { color-scheme: dark; }
+
+/* Browsers without light-dark(): every token above would be invalid. Fall back to light values. */
+@supports not (color: light-dark(#000, #fff)) {
+  :root {
+    color-scheme: light;
+    --paper: #f3f0e8; --paper-2: #ebe7dc; --ink: #121110; --ink-2: #4a4741; --rule: #d6d1c3;
+    --rule-strong: #8c8578;
+    --accent: #e8460f; --accent-text: #b93a0b;
+    --layer-hardware: #2b3a42; --layer-backend: #1c1b1a; --layer-desktop: #3a3631; --layer-mobile: #4a4741;
+    --mark-hardware: #2b3a42; --mark-backend: #e8460f; --mark-desktop: #6b6358; --mark-mobile: #8a8478;
+  }
+}

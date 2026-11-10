@@ -1,0 +1,30 @@
+---
+import SectionHeader from './SectionHeader.astro';
+import { profile } from '../content/profile';
+import { sectionNumbers } from '../content/nav';
+import '../styles/sections/about.css';
+---
+<section id="about" class="section" aria-labelledby="about-title">
+  <div class="container">
+    <SectionHeader num={sectionNumbers.about} title="About" id="about-title" />
+    <div class="about-grid reveal">
+      <div class="about-quote">
+        <p class="pull">{profile.pullQuote}</p>
+        <p class="about-closing">{profile.aboutClosing}</p>
+      </div>
+      <div class="about-copy">
+        {profile.about.map((p) => <p>{p}</p>)}
+        <dl class="spec-strip mono">
+          <div><dt>Started</dt><dd>{profile.started}</dd></div>
+          <div><dt>Degree</dt><dd>{profile.degree.title}</dd></div>
+        </dl>
+        <ul class="principles" role="list">
+          {profile.principles.map((p, i) => (
+            <li><span class="mono" aria-hidden="true">{String(i + 1).padStart(2, '0')}</span>{p}</li>
+          ))}
+        </ul>
+        {profile.now && <p class="mono about-now">Now · {profile.now}</p>}
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,122 @@
+.legacy-anchor { display: block; height: 0; }
+
+.stack {
+  display: grid;
+  gap: var(--space-2);
+}
+.slab {
+  background: var(--slab);
+  color: var(--on-layer);
+  border: 1px solid var(--rule-strong);
+}
+.slab summary,
+.slab-head {
+  display: grid;
+  grid-template-columns: 1fr auto;
+  grid-template-areas:
+    'name toggle'
+    'note toggle'
+    'items toggle';
+  align-items: center;
+  column-gap: var(--space-3);
+  row-gap: var(--space-1);
+  padding: var(--space-4);
+  min-height: 44px;
+  list-style: none;
+}
+.slab summary { cursor: pointer; }
+.slab summary::-webkit-details-marker { display: none; }
+.slab-name {
+  grid-area: name;
+  font-family: var(--font-display);
+  font-size: var(--step-2);
+  line-height: 1.1;
+}
+.slab-note {
+  grid-area: note;
+  justify-self: start;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  border: 1px solid color-mix(in srgb, var(--on-layer) 50%, transparent);
+  padding: 0 var(--space-2);
+}
+.slab-items {
+  grid-area: items;
+  opacity: 0.88;
+}
+.slab-toggle {
+  grid-area: toggle;
+  width: 28px;
+  height: 28px;
+  border: 1px solid color-mix(in srgb, var(--on-layer) 60%, transparent);
+  border-radius: 50%;
+  position: relative;
+}
+.slab-toggle::before,
+.slab-toggle::after {
+  content: '';
+  position: absolute;
+  left: 50%; top: 50%;
+  width: 10px; height: 1.5px;
+  background: currentColor;
+  transform: translate(-50%, -50%);
+  transition: transform var(--t-fast) var(--ease);
+}
+.slab-toggle::after { transform: translate(-50%, -50%) rotate(90deg); }
+.slab[open] .slab-toggle::after { transform: translate(-50%, -50%) rotate(0deg); }
+
+/* Backend is the heaviest layer */
+.slab[data-layer='backend'] summary { padding-block: var(--space-5); }
+.slab[data-layer='backend'] .slab-name { font-size: var(--step-3); }
+
+.slab-body {
+  padding: 0 var(--space-4) var(--space-4);
+  display: grid;
+  gap: var(--space-3);
+}
+.slab-label {
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  opacity: 0.85;
+}
+.slab-related ul { display: flex; flex-wrap: wrap; gap: 0 var(--space-4); margin-top: var(--space-1); }
+.slab-related a {
+  color: var(--on-layer);
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  text-underline-offset: 0.25em;
+}
+
+/* Focus ring inside slabs: --accent fails 3:1 on some light slabs */
+.slab :focus-visible { outline-color: var(--on-layer); }
+
+.tooling {
+  color: var(--ink-2);
+  padding: var(--space-3) var(--space-4);
+  border: 1px dashed var(--rule-strong);
+}
+.tooling .slab-label { margin-right: var(--space-2); }
+
+@media (min-width: 768px) {
+  .slab summary,
+  .slab-head {
+    grid-template-columns: minmax(10rem, 14rem) 1fr auto;
+    grid-template-areas:
+      'name items toggle'
+      'note items toggle';
+  }
+}
+
+/* Smooth opening only where the browser can animate details content natively. */
+@supports selector(::details-content) {
+  @media (prefers-reduced-motion: no-preference) {
+    .slab { interpolate-size: allow-keywords; }
+    .slab::details-content {
+      block-size: 0;
+      overflow: clip;
+      transition: block-size var(--t-base) var(--ease), content-visibility var(--t-base) allow-discrete;
+    }
+    .slab[open]::details-content { block-size: auto; }
+  }
+}

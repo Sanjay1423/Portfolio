@@ -1,0 +1,55 @@
+---
+import SectionHeader from './SectionHeader.astro';
+import { layers, tooling } from '../content/stack';
+import { projects } from '../content/projects';
+import { sectionNumbers } from '../content/nav';
+import '../styles/sections/stack.css';
+
+// Render top to bottom: Mobile first, Hardware last.
+const ordered = [...layers].reverse();
+---
+<section id="stack" class="section" aria-labelledby="stack-title">
+  <span id="skills" class="legacy-anchor"></span>
+  <div class="container">
+    <SectionHeader num={sectionNumbers.stack} title="Stack" id="stack-title" />
+    <div class="stack reveal">
+      {ordered.map((layer) => {
+        const related = projects.filter((p) => p.layer === layer.id);
+        const expandable = Boolean(layer.whatIDid) || related.length > 0;
+        const head = (
+          <Fragment>
+            <span class="slab-name">{layer.name}</span>
+            {layer.note && <span class="slab-note mono">{layer.note}</span>}
+            <span class="slab-items mono">{layer.items.join(' / ')}</span>
+          </Fragment>
+        );
+        return expandable ? (
+          <details class="slab" name="stack" data-layer={layer.id}>
+            <summary>
+              {head}
+              <span class="slab-toggle" aria-hidden="true"></span>
+            </summary>
+            <div class="slab-body">
+              {layer.whatIDid && <p>{layer.whatIDid}</p>}
+              {related.length > 0 && (
+                <div class="slab-related">
+                  <p class="mono slab-label">Related work</p>
+                  <ul role="list">
+                    {related.map((p) => (
+                      <li><a href={`#${p.slug}`}>{p.title} <span aria-hidden="true">→</span></a></li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+            </div>
+          </details>
+        ) : (
+          <div class="slab" data-layer={layer.id}>
+            <div class="slab-head">{head}</div>
+          </div>
+        );
+      })}
+      <p class="tooling mono"><span class="slab-label">Tooling</span> {tooling.join(' / ')}</p>
+    </div>
+  </div>
+</section>

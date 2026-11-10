@@ -1,0 +1,65 @@
+---
+import SectionHeader from './SectionHeader.astro';
+import { roles, promotion, branches } from '../content/experience';
+import { sectionNumbers } from '../content/nav';
+import '../styles/sections/experience.css';
+
+const [current, ...earlier] = roles;
+---
+<section id="experience" class="section" aria-labelledby="experience-title">
+  <div class="container">
+    <SectionHeader num={sectionNumbers.experience} title="Experience" id="experience-title" />
+    <div class="experience-grid">
+      <ol class="log reveal" role="list">
+        {current && (
+          <li class="log-entry">
+            <p class="mono log-date">{current.dates}</p>
+            <h3 class="log-title">{current.title}</h3>
+            <p class="log-org">{current.company}, {current.city}</p>
+            <ul class="log-bullets" role="list">
+              {current.bullets.map((b) => (
+                <li>
+                  {b.text}
+                  {b.outcome && <span class="log-outcome">{b.outcome}</span>}
+                </li>
+              ))}
+            </ul>
+          </li>
+        )}
+        <li class="log-marker">
+          <p class="mono"><span class="log-marker-label">{promotion.label}</span> · {promotion.date}</p>
+        </li>
+        {earlier.map((role) => (
+          <li class="log-entry">
+            <p class="mono log-date">{role.dates}</p>
+            <h3 class="log-title">{role.title}</h3>
+            <p class="log-org">{role.company}, {role.city}</p>
+            <ul class="log-bullets" role="list">
+              {role.bullets.map((b) => (
+                <li>
+                  {b.text}
+                  {b.outcome && <span class="log-outcome">{b.outcome}</span>}
+                </li>
+              ))}
+            </ul>
+          </li>
+        ))}
+      </ol>
+
+      <ul class="branches" role="list">
+        {branches.map((b) => (
+          <li class="branch">
+            <p class="mono branch-kind">{b.kind} · {b.dates}</p>
+            <h3 class="branch-title">{b.title}</h3>
+            <p class="branch-org">{b.org}</p>
+            {b.bullets.length > 0 && (
+              <ul class="branch-bullets" role="list">
+                {b.bullets.map((t) => <li>{t}</li>)}
+              </ul>
+            )}
+          </li>
+        ))}
+      </ul>
+    </div>
+  </div>
+</section>
