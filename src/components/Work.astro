@@ -1,0 +1,33 @@
+---
+import SectionHeader from './SectionHeader.astro';
+import ProjectRow from './ProjectRow.astro';
+import { projects } from '../content/projects';
+import { sectionNumbers } from '../content/nav';
+import '../styles/sections/work.css';
+
+const filters = [
+  { id: 'all', label: 'All' },
+  { id: 'professional', label: 'Professional' },
+  { id: 'earlier', label: 'Earlier' },
+];
+---
+<section id="work" class="section" aria-labelledby="work-title">
+  <div class="container">
+    <SectionHeader num={sectionNumbers.work} title="Work" id="work-title" />
+    <div class="work-filters" data-needs-js>
+      <div role="group" aria-label="Filter projects">
+        {filters.map((f, i) => (
+          <button type="button" data-filter={f.id} aria-pressed={i === 0 ? 'true' : 'false'}>{f.label}</button>
+        ))}
+      </div>
+      <p class="visually-hidden" aria-live="polite" data-work-status></p>
+    </div>
+    <ol class="work-list reveal" role="list">
+      {projects.map((project, index) => <ProjectRow project={project} index={index} />)}
+    </ol>
+  </div>
+</section>
+
+<script>
+  import '../scripts/work-filter';
+</script>

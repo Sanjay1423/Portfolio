@@ -1,0 +1,44 @@
+---
+import { Picture } from 'astro:assets';
+import RequestTrace from './RequestTrace.astro';
+import Icon from './Icon.astro';
+import heroImage from '../assets/hero.jpg';
+import { profile } from '../content/profile';
+import '../styles/sections/hero.css';
+
+const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
+const since = profile.started.split(' ').pop();
+---
+<section id="hero" class="hero" aria-labelledby="hero-name">
+  <div class="container hero-grid">
+    <div class="hero-copy">
+      <RequestTrace />
+      <h1 id="hero-name" class="hero-name">{profile.name}</h1>
+      <p class="hero-line">{profile.positioning}</p>
+      <p class="mono hero-meta">
+        <span>{profile.city}</span> · <span>{profile.role} @ {profile.company}</span> · <span>Since {since}</span>
+      </p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="#work">See the work <span aria-hidden="true">→</span></a>
+        {profile.resume ? (
+          <a class="btn" href={`${base}${profile.resume}`}>Résumé <Icon name="arrow-up-right" /></a>
+        ) : (
+          <a class="btn" href={`mailto:${profile.email}`}><Icon name="mail" /> Email me</a>
+        )}
+      </div>
+    </div>
+    <figure class="hero-photo">
+      <Picture
+        src={heroImage}
+        alt={profile.heroAlt}
+        formats={['avif', 'webp']}
+        widths={[360, 540, 720, 900]}
+        sizes="(min-width: 1024px) 30vw, (min-width: 640px) 55vw, 88vw"
+        loading="eager"
+        fetchpriority="high"
+        decoding="async"
+        quality={60}
+      />
+    </figure>
+  </div>
+</section>

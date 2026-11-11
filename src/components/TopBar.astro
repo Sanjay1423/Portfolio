@@ -1,0 +1,55 @@
+---
+import Icon from './Icon.astro';
+import MobileMenu from './MobileMenu.astro';
+import { profile } from '../content/profile';
+import { navLinks } from '../content/nav';
+import '../styles/sections/topbar.css';
+---
+<header class="topbar">
+  <div class="container topbar-inner">
+    <a class="skip-link" href="#main">Skip to content</a>
+    <a class="wordmark" href="#hero">{profile.name}</a>
+
+    <nav class="topnav" aria-label="Sections">
+      <ul role="list">
+        {navLinks.map((l) => (
+          <li><a href={`#${l.id}`} data-nav={l.id}>{l.label}</a></li>
+        ))}
+      </ul>
+    </nav>
+
+    <div class="topbar-tools">
+      <ul class="topbar-social" role="list">
+        <li>
+          <a href={profile.linkedin} aria-label="LinkedIn" target="_blank" rel="noopener noreferrer"><Icon name="linkedin" /></a>
+        </li>
+        <li>
+          <a href={profile.github} aria-label="GitHub" target="_blank" rel="noopener noreferrer"><Icon name="github" /></a>
+        </li>
+      </ul>
+      <button class="theme-toggle" type="button" data-needs-js data-theme-toggle aria-label="Switch theme">
+        <Icon name="moon" class="icon icon-moon" />
+        <Icon name="sun" class="icon icon-sun" />
+      </button>
+      <button
+        class="menu-button"
+        type="button"
+        data-needs-js
+        data-menu-open
+        aria-haspopup="dialog"
+        aria-controls="menu"
+        aria-expanded="false"
+        aria-label="Open menu"
+      >
+        <Icon name="menu" />
+        <span class="mono" aria-hidden="true">Menu</span>
+      </button>
+    </div>
+  </div>
+</header>
+<MobileMenu />
+
+<script>
+  import '../scripts/theme';
+  import '../scripts/nav';
+</script>

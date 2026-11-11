@@ -1,0 +1,34 @@
+---
+import Icon from './Icon.astro';
+import { profile } from '../content/profile';
+import { navLinks } from '../content/nav';
+---
+<dialog id="menu" class="menu" aria-label="Menu">
+  <div class="menu-inner">
+    <div class="menu-head">
+      <span class="eyebrow">Menu</span>
+      <button class="menu-close" type="button" data-menu-close aria-label="Close menu">
+        <Icon name="close" />
+      </button>
+    </div>
+    <nav aria-label="Sections">
+      <ul class="menu-links" role="list">
+        {navLinks.map((l) => (
+          <li><a href={`#${l.id}`} data-nav={l.id}>{l.label}</a></li>
+        ))}
+      </ul>
+    </nav>
+    <ul class="menu-social" role="list">
+      <li>
+        <a class="link is-underlined" href={profile.linkedin} target="_blank" rel="noopener noreferrer">
+          LinkedIn <Icon name="arrow-up-right" />
+        </a>
+      </li>
+      <li>
+        <a class="link is-underlined" href={profile.github} target="_blank" rel="noopener noreferrer">
+          GitHub <Icon name="arrow-up-right" />
+        </a>
+      </li>
+    </ul>
+  </div>
+</dialog>

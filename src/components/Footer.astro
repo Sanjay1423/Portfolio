@@ -1,0 +1,13 @@
+---
+import { profile } from '../content/profile';
+const year = new Date().getFullYear();
+---
+<footer class="footer">
+  <div class="container">
+    <p class="mono">{profile.name} · {year}</p>
+    <ul class="mono" role="list">
+      <li><a class="link" href={profile.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn</a></li>
+      <li><a class="link" href={profile.github} target="_blank" rel="noopener noreferrer">GitHub</a></li>
+    </ul>
+  </div>
+</footer>

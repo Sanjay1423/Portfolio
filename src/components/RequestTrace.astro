@@ -1,0 +1,21 @@
+---
+// Decorative request trace behind the hero name: Client → API → Service → DB and back.
+// No numbers on purpose. Draws once on load; static final frame under reduced motion or without JS.
+const nodes = [
+  { x: 24, label: 'Client' },
+  { x: 196, label: 'API' },
+  { x: 368, label: 'Service' },
+  { x: 540, label: 'DB' },
+];
+---
+<svg class="trace" viewBox="0 0 600 132" aria-hidden="true" focusable="false">
+  <path class="trace-line" pathLength="1" d="M24 44 H540 C580 44 580 92 540 92 H24" />
+  {nodes.map((n, i) => (
+    <g class="trace-node" style={`--i:${i}`}>
+      <circle cx={n.x} cy="44" r="4" />
+      <circle cx={n.x} cy="92" r="2.5" />
+      <text x={n.x} y="20" text-anchor={i === 0 ? 'start' : i === nodes.length - 1 ? 'end' : 'middle'}>{n.label}</text>
+    </g>
+  ))}
+  <circle class="trace-pulse" cx="24" cy="92" r="4" />
+</svg>

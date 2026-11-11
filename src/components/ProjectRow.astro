@@ -1,0 +1,50 @@
+---
+import ArchDiagram from './ArchDiagram.astro';
+import Icon from './Icon.astro';
+import type { Project } from '../content/types';
+import { layerName } from '../content/stack';
+
+interface Props {
+  project: Project;
+  index: number;
+}
+const { project, index } = Astro.props;
+const num = String(index + 1).padStart(2, '0');
+const groupLabel = project.group === 'professional' ? 'Professional' : 'Earlier';
+const hasDiagram = project.slug === 'backend-services';
+---
+<li class="project" id={project.slug} data-group={project.group} data-layer={project.layer}>
+  <article aria-labelledby={`${project.slug}-title`}>
+    <div class="project-row">
+      <span class="mono project-num" aria-hidden="true">{num}</span>
+      <h3 class="project-title" id={`${project.slug}-title`}>{project.title}</h3>
+      <p class="mono project-layer"><span class="marker" aria-hidden="true"></span>{layerName(project.layer)}</p>
+      <p class="mono project-stack"><span class="visually-hidden">Stack: </span>{project.stack.join(' / ')}</p>
+      <p class="mono project-group">{groupLabel}{project.status && ` · ${project.status}`}</p>
+    </div>
+    <div class="project-detail">
+      <p class="project-summary">{project.summary}</p>
+      {project.links && project.links.length > 0 && (
+        <ul class="project-links" role="list">
+          {project.links.map((l) => (
+            <li><a class="link is-underlined" href={l.href} target="_blank" rel="noopener noreferrer">{l.label} <Icon name="arrow-up-right" /></a></li>
+          ))}
+        </ul>
+      )}
+      {project.caseStudy ? (
+        <details class="case">
+          <summary class="mono">Read the case study</summary>
+          <dl class="case-body">
+            <div><dt class="mono">Problem</dt><dd>{project.caseStudy.problem}</dd></div>
+            <div><dt class="mono">What I did</dt><dd>{project.caseStudy.whatIDid}</dd></div>
+            <div><dt class="mono">A decision I'm proud of</dt><dd>{project.caseStudy.decision}</dd></div>
+            <div><dt class="mono">Result</dt><dd>{project.caseStudy.result}</dd></div>
+          </dl>
+          {hasDiagram && <ArchDiagram />}
+        </details>
+      ) : (
+        hasDiagram && <ArchDiagram />
+      )}
+    </div>
+  </article>
+</li>

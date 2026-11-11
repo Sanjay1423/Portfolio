@@ -1,0 +1,115 @@
+.hero {
+  /* min-height, not height: never clip on short or zoomed screens */
+  min-height: calc(100svh - var(--topbar));
+  display: flex;
+  align-items: center;
+  padding-block: var(--space-5);
+}
+.hero-grid {
+  display: grid;
+  gap: var(--space-5);
+  align-items: end;
+}
+.hero-copy {
+  position: relative;
+}
+.hero-meta span { white-space: nowrap; }
+.hero-name {
+  font-family: var(--font-display);
+  font-size: var(--step-6);
+  line-height: 0.92;
+  letter-spacing: -0.02em;
+  position: relative;
+}
+.hero-line {
+  font-size: var(--step-2);
+  line-height: 1.25;
+  max-width: 24ch;
+  margin-top: var(--space-4);
+}
+.hero-meta {
+  color: var(--ink-2);
+  margin-top: var(--space-4);
+}
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-3);
+  margin-top: var(--space-5);
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--space-2);
+  min-height: 48px;
+  padding: 0 var(--space-4);
+  border: 1px solid var(--ink);
+  font-weight: 500;
+  text-decoration: none;
+  transition: background-color var(--t-fast) var(--ease), color var(--t-fast) var(--ease);
+}
+.btn:hover { background: var(--paper-2); }
+.btn-primary { background: var(--ink); color: var(--paper); }
+.btn-primary:hover { background: var(--accent-text); border-color: var(--accent-text); color: #fff; }
+
+.hero-photo img {
+  width: 100%;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  object-position: 50% 30%;
+  border: 1px solid var(--rule);
+}
+@media (max-width: 1023.98px) {
+  .hero-photo { max-width: 420px; }
+}
+
+@media (min-width: 1024px) {
+  .hero-grid { grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--space-4); }
+  .hero-copy { grid-column: 1 / span 8; padding-bottom: var(--space-3); }
+  .hero-photo { grid-column: 9 / span 4; }
+}
+
+/* ---------- Request trace ---------- */
+.trace {
+  display: block;
+  width: min(100%, 520px);
+  height: auto;
+  margin-bottom: var(--space-3);
+  overflow: visible;
+  pointer-events: none;
+}
+.trace-line {
+  fill: none;
+  stroke: var(--rule-strong);
+  stroke-width: 1;
+}
+.trace-node circle { fill: var(--paper); stroke: var(--rule-strong); stroke-width: 1; }
+.trace-node text {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  fill: var(--ink-2);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.trace-pulse { fill: var(--accent); opacity: 0; }
+
+@media (prefers-reduced-motion: no-preference) {
+  .js .trace-line {
+    stroke-dasharray: 1;
+    stroke-dashoffset: 1;
+    animation: trace-draw 1.6s var(--ease) 0.2s forwards;
+  }
+  .js .trace-node { opacity: 0; animation: trace-fade var(--t-base) var(--ease) forwards; animation-delay: calc(0.25s + var(--i) * 0.28s); }
+  .js .trace-pulse { animation: trace-pulse 1.4s var(--ease) 2s 1 both; transform-origin: 24px 92px; }
+}
+@keyframes trace-draw { to { stroke-dashoffset: 0; } }
+@keyframes trace-fade { to { opacity: 1; } }
+@keyframes trace-pulse {
+  0% { opacity: 0; transform: scale(0.6); }
+  35% { opacity: 1; transform: scale(1.4); }
+  100% { opacity: 0.9; transform: scale(1); }
+}
+/* Without the animation the pulse dot simply sits at the end of the trace. */
+@media (prefers-reduced-motion: reduce) { .trace-pulse { opacity: 0.9; } }
+html:not(.js) .trace-pulse { opacity: 0.9; }

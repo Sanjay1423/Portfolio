@@ -1,0 +1,42 @@
+---
+import SectionHeader from './SectionHeader.astro';
+import Icon from './Icon.astro';
+import { profile } from '../content/profile';
+import { sectionNumbers } from '../content/nav';
+import '../styles/sections/contact.css';
+
+const base = import.meta.env.BASE_URL.endsWith('/') ? import.meta.env.BASE_URL : `${import.meta.env.BASE_URL}/`;
+---
+<section id="contact" class="section contact" aria-labelledby="contact-title">
+  <div class="container">
+    <SectionHeader num={sectionNumbers.contact} title="Contact" id="contact-title" />
+    <div class="contact-body reveal">
+      <p class="contact-headline">{profile.contactHeadline}</p>
+      <p class="contact-sub">{profile.contactSupporting}</p>
+
+      <div class="contact-email">
+        <a class="email-link" href={`mailto:${profile.email}`} data-email>{profile.email}</a>
+        <button class="copy-btn" type="button" data-needs-js data-copy-email>
+          <Icon name="copy" />
+          <span data-copy-label>Copy</span>
+        </button>
+        <span class="visually-hidden" aria-live="polite" data-copy-status></span>
+      </div>
+
+      <ul class="contact-links" role="list">
+        <li><a class="link is-underlined" href={profile.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn <Icon name="arrow-up-right" /></a></li>
+        <li><a class="link is-underlined" href={profile.github} target="_blank" rel="noopener noreferrer">GitHub <Icon name="arrow-up-right" /></a></li>
+        {profile.resume && (
+          <li><a class="link is-underlined" href={`${base}${profile.resume}`}>Résumé (PDF) <Icon name="arrow-up-right" /></a></li>
+        )}
+      </ul>
+
+      <p class="mono contact-time" data-clock>{profile.city}</p>
+    </div>
+  </div>
+</section>
+
+<script>
+  import '../scripts/copy-email';
+  import '../scripts/clock';
+</script>

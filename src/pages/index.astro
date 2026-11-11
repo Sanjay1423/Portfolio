@@ -1,0 +1,25 @@
+---
+import Base from '../layouts/Base.astro';
+import TopBar from '../components/TopBar.astro';
+import Hero from '../components/Hero.astro';
+import About from '../components/About.astro';
+import StackDiagram from '../components/StackDiagram.astro';
+import LogTimeline from '../components/LogTimeline.astro';
+import Work from '../components/Work.astro';
+import ContactBlock from '../components/ContactBlock.astro';
+import Footer from '../components/Footer.astro';
+import { profile } from '../content/profile';
+import '../styles/motion.css';
+---
+<Base title="Sanjay S · Software Engineer" description={profile.metaDescription}>
+  <TopBar />
+  <main id="main" tabindex="-1">
+    <Hero />
+    <About />
+    <StackDiagram />
+    <LogTimeline />
+    <Work />
+    <ContactBlock />
+  </main>
+  <Footer />
+</Base>

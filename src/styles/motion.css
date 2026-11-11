@@ -1,0 +1,37 @@
+/* Longhands on purpose: the CSS minifier would otherwise fold animation-timeline into the
+   `animation` shorthand, which browsers reject. */
+/* Phase 7 enhancements. Every rule here is behind .js, @supports and prefers-reduced-motion,
+   so the initial hidden state can never apply when JS is off or motion is reduced. */
+
+main:focus, section[tabindex='-1']:focus { outline: none; }
+
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    /* Section rules draw in as the header enters the viewport. */
+    .js .section-header .rule {
+      animation-name: rule-draw;
+      animation-timing-function: linear;
+      animation-fill-mode: both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 100%;
+    }
+
+    /* Reveals: 12px fade-up, applied to at most six blocks (.reveal). */
+    .js .reveal {
+      animation-name: reveal;
+      animation-timing-function: linear;
+      animation-fill-mode: both;
+      animation-timeline: view();
+      animation-range: entry 0% entry 35%;
+    }
+  }
+}
+
+@keyframes rule-draw {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+@keyframes reveal {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: none; }
+}

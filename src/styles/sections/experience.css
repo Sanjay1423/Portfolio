@@ -1,0 +1,111 @@
+.experience-grid {
+  display: grid;
+  gap: var(--space-5);
+}
+.log {
+  position: relative;
+  display: grid;
+  gap: var(--space-5);
+  padding-left: var(--space-5);
+}
+/* The vertical line */
+.log::before {
+  content: '';
+  position: absolute;
+  left: 7px;
+  top: 0.6em;
+  bottom: 0.6em;
+  width: 1px;
+  background: var(--ink);
+  transform-origin: top;
+}
+.log-entry, .log-marker { position: relative; }
+/* Commit dots */
+.log-entry::before,
+.log-marker::before {
+  content: '';
+  position: absolute;
+  left: calc(-1 * var(--space-5) + 1px);
+  top: 0.35em;
+  width: 13px;
+  height: 13px;
+  border-radius: 50%;
+  background: var(--paper);
+  border: 1.5px solid var(--ink);
+}
+.log-entry:first-child::before { background: var(--accent); border-color: var(--accent); }
+.log-marker::before { width: 9px; height: 9px; left: calc(-1 * var(--space-5) + 3px); top: 0.55em; border-color: var(--accent); }
+
+.log-date { color: var(--ink-2); }
+.log-title {
+  font-family: var(--font-display);
+  font-size: var(--step-3);
+  margin-top: var(--space-1);
+}
+.log-org { color: var(--ink-2); margin-top: var(--space-1); }
+.log-bullets {
+  display: grid;
+  gap: var(--space-2);
+  margin-top: var(--space-3);
+  max-width: var(--measure);
+}
+.log-bullets li { padding-left: var(--space-4); position: relative; }
+.log-bullets li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.8em;
+  width: 0.7rem;
+  height: 1px;
+  background: var(--ink-2);
+}
+.log-outcome {
+  display: block;
+  margin-top: var(--space-1);
+  font-family: var(--font-mono);
+  font-size: var(--step--1);
+  color: var(--accent-text);
+}
+.log-marker p { color: var(--accent-text); }
+.log-marker-label { text-transform: uppercase; letter-spacing: 0.08em; }
+
+/* Branches: thinner, indented, quieter */
+.branches {
+  display: grid;
+  gap: var(--space-4);
+  align-content: start;
+  color: var(--ink-2);
+}
+.branch {
+  border-left: 1px solid var(--rule-strong);
+  padding-left: var(--space-4);
+}
+.branch-kind { text-transform: uppercase; letter-spacing: 0.06em; }
+.branch-title {
+  font-family: var(--font-display);
+  font-size: var(--step-2);
+  color: var(--ink);
+  margin-top: var(--space-1);
+}
+.branch-org { margin-top: var(--space-1); }
+.branch-bullets { margin-top: var(--space-2); display: grid; gap: var(--space-1); }
+
+@media (min-width: 1024px) {
+  .experience-grid { grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--space-4); }
+  .log { grid-column: 1 / span 7; }
+  .branches { grid-column: 9 / span 4; padding-top: var(--space-6); }
+}
+
+/* Line draws with scroll where CSS scroll-driven animation exists; otherwise fully drawn. */
+@supports (animation-timeline: view()) {
+  @media (prefers-reduced-motion: no-preference) {
+    .js .log::before {
+      animation-name: log-draw;
+      animation-timing-function: linear;
+      animation-fill-mode: both;
+      animation-timeline: view();
+      animation-range: entry 10% cover 60%;
+    }
+  }
+}
+@keyframes log-draw { from { transform: scaleY(0); } to { transform: scaleY(1); } }
