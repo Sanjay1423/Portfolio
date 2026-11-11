@@ -1,10 +1,10 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
 
-// Gate 2: GitHub Pages project site. The base path is case-sensitive.
+// GitHub Pages user site. The repository must be named sanjay1423.github.io.
 export default defineConfig({
   site: 'https://sanjay1423.github.io',
-  base: '/Portfolio',
+  base: '/',
   output: 'static',
   build: {
     // Inline the (small) stylesheet so it does not block first paint with an extra request.

@@ -1,6 +1,6 @@
 # Sanjay S — portfolio
 
-Personal site: https://sanjay1423.github.io/Portfolio/
+Personal site: https://sanjay1423.github.io
 
 A single static page built with [Astro](https://astro.build), TypeScript and hand-written CSS. The full design and build plan is in [`docs/REDESIGN_SPEC.md`](docs/REDESIGN_SPEC.md).
 
@@ -20,7 +20,7 @@ Requires Node 22.23.4 or newer.
 npm install
 npm run dev       # local dev server
 npm run build     # static build into dist/
-npm run preview   # serve the build at http://localhost:4321/Portfolio/
+npm run preview   # serve the build at http://localhost:4321/
 npm run check     # type check
 npm run todo      # list optional content still missing
 npm run audit     # check no copy from the old site was lost (needs the legacy-v1 tag)
